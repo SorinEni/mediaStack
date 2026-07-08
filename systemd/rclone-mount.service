@@ -1,0 +1,34 @@
+[Unit]
+Description=Rclone VFS Mount for Plex
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/rclone mount googledrive: /mnt/gdrive \
+  --allow-other \
+  --vfs-cache-mode full \
+  --vfs-cache-max-size 100G \
+  --vfs-cache-max-age 168h \
+  --dir-cache-time 720h \
+  --vfs-read-chunk-size 64M \
+  --vfs-read-chunk-size-limit 512M \
+  --buffer-size 256M \
+  --transfers 8 \
+  --drive-chunk-size 128M \
+  --vfs-write-back 10s \
+  --tpslimit 8 \
+  --tpslimit-burst 10 \
+  --drive-pacer-min-sleep 100ms \
+  --drive-pacer-burst 100 \
+  --poll-interval 30s \
+  --vfs-cache-poll-interval 30s \
+  --rc --rc-addr 127.0.0.1:5572 --rc-no-auth \
+  --log-level INFO \
+  --log-file /var/log/rclone/mount.log
+ExecStop=/bin/fusermount -uz /mnt/gdrive
+Restart=on-failure
+User=root
+
+[Install]
+WantedBy=multi-user.target

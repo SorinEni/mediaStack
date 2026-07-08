@@ -1,0 +1,25 @@
+# --- Secrets: never commit these ---
+**/rclone.conf
+**/*.conf.secret
+**/qBittorrent.ini
+**/qBittorrent-data.ini
+backups/qbittorrent/**
+backups/plex/**
+!backups/qbittorrent/.gitkeep
+!backups/plex/.gitkeep
+
+# Plex tokens / claim tokens live in Preferences.xml - excluded above via backups/plex/**
+
+# --- Runtime state, not source ---
+queue.db
+queue.db-journal
+*.log
+/var/log/rclone/
+
+# --- Python ---
+__pycache__/
+*.pyc
+
+# --- OS/editor cruft ---
+.DS_Store
+*.swp

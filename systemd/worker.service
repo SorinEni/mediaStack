@@ -1,0 +1,18 @@
+[Unit]
+Description=rclone upload worker (qBittorrent -> Google Drive)
+After=network-online.target rclone-mount.service mnt-gdrive.mount
+Wants=network-online.target
+Requires=rclone-mount.service
+RequiresMountsFor=/mnt/gdrive
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /root/rclone-scripts/worker.py
+Restart=always
+RestartSec=5
+User=root
+WorkingDirectory=/root/rclone-scripts
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
