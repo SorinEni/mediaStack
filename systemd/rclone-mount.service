@@ -26,6 +26,7 @@ ExecStart=/usr/bin/rclone mount googledrive: /mnt/gdrive \
   --rc --rc-addr 127.0.0.1:5572 --rc-no-auth \
   --log-level INFO \
   --log-file /var/log/rclone/mount.log
+
 ExecStop=/bin/fusermount -uz /mnt/gdrive
 Restart=on-failure
 User=root
